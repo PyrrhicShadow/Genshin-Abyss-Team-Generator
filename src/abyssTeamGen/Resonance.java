@@ -3,7 +3,7 @@ package abyssTeamGen;
 import java.util.HashMap;
 
 public enum Resonance {
-    FERVENT_FLAMES, SOOTHING_WATER, HIGH_VOLTAGE,  SHATTERING_ICE, IMPETUOUS_WINDS, ENDURING_ROCK, PROTECTIVE_CANOPY;
+    FERVENT_FLAMES, SOOTHING_WATER, HIGH_VOLTAGE,  SHATTERING_ICE, IMPETUOUS_WINDS, ENDURING_ROCK, PROTECTIVE_CANOPY, NO_RESONANCE;
 
     public static String getDescription(Resonance r) {
         switch (r) {
@@ -26,4 +26,28 @@ public enum Resonance {
 
         }
     }
+
+    public String toString(Resonance r) {
+        switch (r) {
+            case FERVENT_FLAMES:
+                return "Fervent Flames";
+            case SOOTHING_WATER:
+                return "Soothing Water";
+            case HIGH_VOLTAGE:
+                return "High Voltage";
+            case SHATTERING_ICE:
+                return "Shattering Ice";
+            case IMPETUOUS_WINDS:
+                return "Impetuous Winds";
+            case ENDURING_ROCK:
+                return "Enduring Rock";
+            case PROTECTIVE_CANOPY:
+                return "Protective Canopy";
+            case NO_RESONANCE:
+                return "No resonance";
+            default:
+                return "Unknown resonance.";
+        }
+    }
+
 }

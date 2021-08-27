@@ -3,7 +3,9 @@ package abyssTeamGen;
 import Utilities.Tuple;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class AbyssTeamApp extends CharacterIO {
@@ -12,8 +14,7 @@ public class AbyssTeamApp extends CharacterIO {
     private Character[] abyssTeam1;
     private Character[] abyssTeam2;
     private static final int ABYSS_TEAM_SIZE = 4;
-    private HashSet<String> reactions1;
-    private HashSet<String> reactions2;
+
 
     /**
      *
@@ -23,8 +24,6 @@ public class AbyssTeamApp extends CharacterIO {
         this.characters = characters;
         abyssTeam1 = new Character[ABYSS_TEAM_SIZE];
         abyssTeam2 = new Character[ABYSS_TEAM_SIZE];
-        reactions1 = new HashSet<>();
-        reactions2 = new HashSet<>();
         this.randomTeamGenerator();
 
 
@@ -43,8 +42,6 @@ public class AbyssTeamApp extends CharacterIO {
         }
         abyssTeam1 = new Character[ABYSS_TEAM_SIZE];
         abyssTeam2 = new Character[ABYSS_TEAM_SIZE];
-        reactions1 = new HashSet<>();
-        reactions2 = new HashSet<>();
         this.randomTeamGenerator();
     }
 
@@ -84,14 +81,13 @@ public class AbyssTeamApp extends CharacterIO {
                 tempAbyssTeam.add(tempChara);
             }
             else{
-                System.out.println("Character duplicate skipped");
+                // System.out.println("Character duplicate skipped");
             }
         }
         for(int w = 0; w < ABYSS_TEAM_SIZE; w++) {
             abyssTeam1[w] = tempAbyssTeam.get(w);
             abyssTeam2[w] = tempAbyssTeam.get(w + ABYSS_TEAM_SIZE);
         }
-        this.generateReactions();
 
     }
 
@@ -125,50 +121,116 @@ public class AbyssTeamApp extends CharacterIO {
     }
 
     /**
-     * Getter for Abyssal team reaction possibilities for team 1
-     * @return HashSet of Strings containing all the possible reactions producible by given Abyssal team
+     * Generates all elemental reactions possible given a particular team
+     * @param team Array of Characters
+     * @return HashSet of Strings for the reactions possible
      */
-    public HashSet<String> getReactions1(){
-        return reactions1;
-    }
-
-    /**
-     * Getter for Abyssal team reaction possibilities for team 2
-     * @return HashSet of Strings containing all the possible reactions producible by given Abyssal team
-     */
-    public HashSet<String> getReactions2(){
-        return reactions2;
-    }
-
-    /**
-     * Generates all possible elemental combinations for each Abyssal team
-     * Does not generate names of reactions or deal with mono-elemental possibilities
-     */
-    public void generateReactions() {
-        ArrayList<Tuple<Element>> combinations = new ArrayList<>();
-        for(Character chara1 : abyssTeam1) {
-            for(Character chara2 : abyssTeam1) {
+    public static HashSet<String> generateReactions(Character[] team) {
+        ArrayList<Tuple<Element, Element>> combinations = new ArrayList<>();
+        HashSet<String> reactions = new HashSet<>();
+        for(Character chara1 : team) {
+            for(Character chara2 : team) {
+                // make sure you are not matching characters with themselves
                 if(!chara1.equals(chara2)) {
-                    combinations.add(new Tuple<Element>(chara1.getVision(), chara2.getVision()));
+                    combinations.add(new Tuple<Element, Element>(chara1.getVision(), chara2.getVision()));
                 }
             }
         }
 
-        for(Tuple<Element> comb : combinations) {
-            reactions1.add(Element.getReaction(comb.getOne(), comb.getTwo()));
+        for(Tuple<Element, Element> comb : combinations) {
+            reactions.add(Element.getReaction(comb.getOne(), comb.getTwo()));
         }
 
+        // get rid of "No reaction" as a reaction if it is not the only reaction generated
+        if (reactions.size() > 1) {
+            reactions.remove("No reaction");
+        }
+        return reactions;
+    }
 
-        for(Character chara1 : abyssTeam2) {
-            for(Character chara2 : abyssTeam2) {
-                if(!chara1.equals(chara2)) {
-                    combinations.add(new Tuple<Element>(chara1.getVision(), chara2.getVision()));
-                }
+    /**
+     * Generates the elemental resonance(s) present in a team comp
+     * @param team Team for resonance generation; If there are fewer than 4 memebers, returns no resonances; If there are more than four memebers, returns null;
+     * @return Elemental resonance or null if there are more than 4 members
+     */
+    public static ArrayList<Resonance> generateElementalResonance(Character[] team) {
+        ArrayList<Resonance> resonances = new ArrayList<>();
+        if (team.length > 4) {
+            return null;
+        }
+        else if(team.length < 4) {
+            resonances.add(Resonance.NO_RESONANCE);
+            return resonances;
+        }
+
+        // counts
+        int pyro = 0;
+        int cryo = 0;
+        int hydro = 0;
+        int electro = 0;
+        int anemo = 0;
+        int geo = 0;
+        int dendro = 0;
+
+        // find out how many characters of each element
+        for(Character chara : team) {
+            Element vis = chara.getVision();
+            switch (chara.getVision()) {
+                case PYRO:
+                    pyro++;
+                    break;
+                case CRYO:
+                    cryo++;
+                    break;
+                case HYDRO:
+                    hydro++;
+                    break;
+                case ELECTRO:
+                    electro++;
+                    break;
+                case ANEMO:
+                    anemo++;
+                    break;
+                case GEO:
+                    geo++;
+                    break;
+                case DENDRO:
+                    dendro++;
+                    break;
             }
         }
-        for(Tuple<Element> comb : combinations) {
-            reactions2.add(Element.getReaction(comb.getOne(), comb.getTwo()));
+
+        // calculate the resonance of the team
+        if(pyro < 2 && cryo < 2 && hydro < 2 && electro < 2 && anemo < 2 && geo < 2 && dendro < 2) {
+            resonances.add(Resonance.PROTECTIVE_CANOPY);
         }
+        else {
+            if (pyro > 1) {
+                resonances.add(Resonance.FERVENT_FLAMES);
+            }
+            if (cryo > 1) {
+                resonances.add(Resonance.SHATTERING_ICE);
+            }
+            if (hydro > 1) {
+                resonances.add(Resonance.SOOTHING_WATER);
+            }
+            if (electro > 1) {
+                resonances.add(Resonance.HIGH_VOLTAGE);
+            }
+            if (anemo > 1) {
+                resonances.add(Resonance.IMPETUOUS_WINDS);
+            }
+            if (geo > 1) {
+                resonances.add(Resonance.ENDURING_ROCK);
+            }
+            if (dendro > 1) {
+                resonances.add(Resonance.NO_RESONANCE);
+            }
+
+
+        }
+
+        return resonances;
     }
 
     public Character[] getAbyssTeam1() {
@@ -194,31 +256,61 @@ public class AbyssTeamApp extends CharacterIO {
             System.out.println("Your random character is " + randomCharacter().getName());
         }
          */
-
-
-        System.out.println("Your random abyss teams are:");
-        System.out.println("=====Side one:=====");
+        System.out.println("===========================");
+        System.out.println("Random Abyss Team Generator");
+        System.out.println("===========================");
+        System.out.println();
+        System.out.println("=========Side one:=========");
         for(Character chara : abyssTeam1) {
             System.out.println(chara);
         }
-        System.out.println();
-        System.out.println("Your possible side one reactions are: ");
-        for(String s1 : reactions1) {
-            System.out.println(" " + s1);
+        System.out.print(" Resonances: ");
+        for(Resonance r1 : generateElementalResonance(abyssTeam1)) {
+            System.out.print(" " + r1);
         }
         System.out.println();
-        System.out.println("=====Side two:=====");
+        System.out.print(" Reactions: ");
+        for(String s1 : generateReactions(abyssTeam1)) {
+            System.out.print(" " + s1);
+        }
+        System.out.println();
+
+        System.out.println();
+        System.out.println("=========Side two:=========");
         for(Character chara : abyssTeam2) {
             System.out.println(chara);
         }
+        System.out.print(" Resonances: ");
+        for(Resonance r2 : generateElementalResonance(abyssTeam2)) {
+            System.out.print(" " + r2);
+        }
         System.out.println();
-        System.out.println("Your possible side two reactions are");
-        for(String s2 : reactions2) {
-            System.out.println(" " + s2);
+        System.out.print(" Reactions: ");
+        for(String s2 : generateReactions(abyssTeam2)) {
+            System.out.print(" " +s2);
+        }
+        System.out.println();
+
+        /*
+        ArrayList<String> testCharasList = new ArrayList<>();
+        testCharasList.add("Jean,Anemo,Sword,5");
+        testCharasList.add("Kaedehara Kazuha,Anemo,Sword,5");
+        testCharasList.add("Traveler,Anemo,Sword,5");
+        testCharasList.add("Xiao,Anemo,Polearm,5");
+
+        Character[] testCharaTeam = new Character[4];
+        for(int p = 0; p < 4; p++) {
+            testCharaTeam[p] = new Character(testCharasList.get(p));
         }
 
+        ArrayList<Resonance> testResonances = generateElementalResonance(testCharaTeam);
+        for(Resonance tR : testResonances) {
+            System.out.println(tR);
+        }
 
-/*
+         */
+
+        /*
         Character[] longCharaArray = new Character[25];
         ArrayList<Character> seperateCharaList = this.characters;
 
@@ -228,7 +320,7 @@ public class AbyssTeamApp extends CharacterIO {
             System.out.println(c);
         }
 
- */
+         */
     }
 
     /**
@@ -237,7 +329,7 @@ public class AbyssTeamApp extends CharacterIO {
      */
     public static void main(String[] args){
 
-        AbyssTeamApp app = new AbyssTeamApp("data/CharacterList.txt");
+        AbyssTeamApp app = new AbyssTeamApp("data/SilvaCharacterList.txt");
         app.run();
 
     }
