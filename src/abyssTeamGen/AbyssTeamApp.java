@@ -1,5 +1,7 @@
 package abyssTeamGen;
 
+import Utilities.Tuple;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;

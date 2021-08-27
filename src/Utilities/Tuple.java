@@ -1,4 +1,4 @@
-package abyssTeamGen;
+package Utilities;
 
 public class Tuple<E>{
     private E one;
