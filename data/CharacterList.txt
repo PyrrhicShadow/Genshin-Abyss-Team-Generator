@@ -1,0 +1,44 @@
+Name,Vision,Weapon,Rarity
+Albedo,Geo,Sword,5
+Amber,Pyro,Bow,4
+Barbara,Hydro,Catalyst,4
+Beidou,Electro,Claymore,4
+Bennett,Pyro,Sword,4
+Chongyun,Cryo,Claymore,4
+Diluc,Pyro,Claymore,5
+Diona,Cryo,Bow,4
+Eula,Cryo,Claymore,5
+Fischl,Electro,Bow,4
+Ganyu,Cryo,Bow,5
+Hu Tao,Pyro,Polearm,5
+Jean,Anemo,Sword,5
+Kaedehara Kazuha,Anemo,Sword,5
+Kaeya,Cryo,Sword,4
+Kamisato Ayaka,Cryo,Sword,5
+Keqing,Electro,Sword,5
+Klee,Pyro,Catalyst,5
+Lisa,Electro,Catalyst,4
+Mona,Hydro,Catalyst,5
+Ningguang,Geo,Catalyst,4
+Noelle,Geo,Claymore,4
+Qiqi,Cryo,Sword,5
+Razor,Electro,Claymore,4
+Rosaria,Cryo,Polearm,4
+Sayu,Anemo,Claymore,4
+Sucrose,Anemo,Catalyst,4
+Tartaglia,Hydro,Bow,5
+Traveler,Anemo,Sword,5
+Traveler,Geo,Sword,5
+Traveler,Electro,Sword,5
+Venti,Anemo,Bow,5
+Xiangling,Pyro,Polearm,4
+Xiao,Anemo,Polearm,5
+Xingqiu,Hydro,Sword,4
+Xinyan,Pyro,Claymore,4
+Yanfei,Pyro,Catalyst,4
+Yoimiya,Pyro,Bow,5
+Zhongli,Geo,Polearm,5
+Aloy,Cryo,Bow,5
+Kujou Sara,Electro,Bow,4
+Raiden Shogun,Electro,Polearm,5
+Sangonomiya Kokomi,Hydro,Catalyst,5
