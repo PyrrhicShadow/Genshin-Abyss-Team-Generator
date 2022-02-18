@@ -78,7 +78,7 @@ public enum Element {
         }
         else if(trigger == ELECTRO) {
             if (aura == PYRO) {
-                return "Overconduct";
+                return "Overloaded";
             }
             else if(trigger == CRYO) {
                 return "Superconduct";

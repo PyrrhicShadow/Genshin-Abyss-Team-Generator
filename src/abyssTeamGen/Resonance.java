@@ -46,7 +46,7 @@ public enum Resonance {
             case NO_RESONANCE:
                 return "No resonance";
             default:
-                return "Unknown resonance.";
+                return "Unknown resonance";
         }
     }
 

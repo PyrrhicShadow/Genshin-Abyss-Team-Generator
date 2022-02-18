@@ -42,3 +42,9 @@ Aloy,Cryo,Bow,5
 Kujou Sara,Electro,Bow,4
 Raiden Shogun,Electro,Polearm,5
 Sangonomiya Kokomi,Hydro,Catalyst,5
+Thoma,Pyro,Polearm,4
+Arataki Itto,Geo,Claymore,5
+Gorou,Geo,Bow,4
+Shenhe,Cryo,Polearm,5
+Yun Jin,Geo,Polearm,4
+Yae Miko,Electro,Catalyst,5

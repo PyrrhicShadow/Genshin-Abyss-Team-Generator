@@ -1,13 +1,14 @@
 package abyssTeamGen;
 
 import Utilities.Tuple;
-
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ *  Generates two 4-character teams for use in the Spiral Abyss
+ *  Provides elemental resonances for each team and elemental reaction possibilities
+ */
 public class AbyssTeamApp extends CharacterIO {
 
     private ArrayList<Character> characters;
@@ -17,8 +18,8 @@ public class AbyssTeamApp extends CharacterIO {
 
 
     /**
-     *
-     * @param characters
+     * Constructs an Abyss Team Generator App from an ArrayList of Characters
+     * @param characters ArrayList of Characters
      */
     public AbyssTeamApp(ArrayList<Character> characters) {
         this.characters = characters;
@@ -30,8 +31,8 @@ public class AbyssTeamApp extends CharacterIO {
     }
 
     /**
-     *
-     * @param data
+     * Constructs an Abyss Team Generator App from a text file
+     * @param data formatted csv
      */
     public AbyssTeamApp(String data) {
         try {
@@ -233,16 +234,25 @@ public class AbyssTeamApp extends CharacterIO {
         return resonances;
     }
 
+    /**
+     * gets the 1st Abyss Team
+     * @return abyssTeam1
+     */
     public Character[] getAbyssTeam1() {
         return abyssTeam1;
     }
 
+    /**
+     * gets the 2nd Abyss Team
+     * @return abyssTeam2
+     */
     public Character[] getAbyssTeam2() {
         return abyssTeam2;
     }
 
     /**
      * The messy body of the program that contains the business logic
+     * Prints the data to the console in a human-readable way
      */
     public void run() {
         /*
@@ -259,36 +269,43 @@ public class AbyssTeamApp extends CharacterIO {
         System.out.println("===========================");
         System.out.println("Random Abyss Team Generator");
         System.out.println("===========================");
+        System.out.println(characters.size() + " available characters.");
         System.out.println();
+
         System.out.println("=========Side one:=========");
         for(Character chara : abyssTeam1) {
             System.out.println(chara);
         }
-        System.out.print(" Resonances: ");
+        System.out.println("---------------------------");
+        System.out.print("Resonances: ");
         for(Resonance r1 : generateElementalResonance(abyssTeam1)) {
-            System.out.print(" " + r1);
+            System.out.print(r1.toString(r1) + ", ");
         }
         System.out.println();
-        System.out.print(" Reactions: ");
+        System.out.print("Reactions: ");
         for(String s1 : generateReactions(abyssTeam1)) {
-            System.out.print(" " + s1);
+            System.out.print(s1 + ", ");
         }
         System.out.println();
+        System.out.println("---------------------------");
 
         System.out.println();
         System.out.println("=========Side two:=========");
         for(Character chara : abyssTeam2) {
             System.out.println(chara);
         }
-        System.out.print(" Resonances: ");
+        System.out.println("---------------------------");
+        System.out.print("Resonances: ");
         for(Resonance r2 : generateElementalResonance(abyssTeam2)) {
-            System.out.print(" " + r2);
+            System.out.print(r2.toString(r2) + ", ");
         }
         System.out.println();
-        System.out.print(" Reactions: ");
+        System.out.print("Reactions: ");
         for(String s2 : generateReactions(abyssTeam2)) {
-            System.out.print(" " +s2);
+            System.out.print(s2 + ", ");
         }
+        System.out.println();
+        System.out.println("---------------------------");
         System.out.println();
 
         /*
@@ -324,12 +341,39 @@ public class AbyssTeamApp extends CharacterIO {
     }
 
     /**
+     * sets the Characters list to a new list from file
+     * @param data formatted csv
+     */
+    public void setCharacters(String data) {
+        try {
+            characters = this.readDataFromFile(data);
+        }
+        catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        this.randomTeamGenerator();
+    }
+
+    /**
+     * sets the Characters list to a new list from an existing ArrayList
+     * @param list ArrayList of Characters
+     */
+    public void setCharacters(ArrayList<Character> list) {
+        characters = list;
+        this.randomTeamGenerator();
+    }
+
+    /**
      * Run your program here
-     * @param args Yeah, don't use this please.
+     * @param args Yeah, don't use this, please.
      */
     public static void main(String[] args){
 
-        AbyssTeamApp app = new AbyssTeamApp("data/SilvaCharacterList.txt");
+        AbyssTeamApp app = new AbyssTeamApp("data/PyrrhicCharacterList.txt");
+        app.run();
+        app.setCharacters("data/SilvaCharacterList.txt");
+        app.run();
+        app.setCharacters("data/CharacterList.txt");
         app.run();
 
     }
