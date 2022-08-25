@@ -5,6 +5,7 @@ public class Character implements Comparable<Character> {
     private Element vision;
     private Weapon weapon;
     private int rarity;
+    private Region region;
 
     /**
      *
@@ -12,12 +13,14 @@ public class Character implements Comparable<Character> {
      * @param vision Element of character's vision
      * @param weapon Weapon of character's weapon
      * @param rarity Star rarity of character
+     * @param region Region of character's vision, other for outlanders
      */
-    public Character(String name, Element vision, Weapon weapon, int rarity) {
+    public Character(String name, Element vision, Weapon weapon, int rarity, Region region) {
         this.name = name;
         this.vision = vision;
         this.weapon = weapon;
         this.rarity = rarity;
+        this.region = region;
     }
 
     /**
@@ -30,6 +33,7 @@ public class Character implements Comparable<Character> {
         vision = Element.valueOf(subStrings[1].toUpperCase());
         weapon = Weapon.valueOf(subStrings[2].toUpperCase());
         rarity = Integer.parseInt(subStrings[3]);
+        region = Region.valueOf(subStrings[4].toUpperCase());
         }
 
     public String getName() {
@@ -48,10 +52,23 @@ public class Character implements Comparable<Character> {
         return rarity;
     }
 
-    public String toString(){
-        return name + ": " + rarity + "-star " + vision.toString() + " " + weapon.toString() + " user";
+    public Region getRegion() {
+        return region;
     }
 
+    /**
+     * Returns a human-readable String of the character's info
+     * @return ex: Eula: 5-star cryo claymore user from Mondstadt
+     */
+    public String toString() {
+        if (region != Region.OTHER) {
+            return name + ": " + rarity + "-star " + vision.toString() + " " + weapon.toString() + " user from " + region.toString();
+        } else {
+            return name + ": " + rarity + "-star " + vision.toString() + " " + weapon.toString() + " user not from Teyvat";
+        }
+    }
+
+    @Override
     public boolean equals(Object obj){
         Character other = (Character)obj;
         if(this.compareTo(other) == 0) {
