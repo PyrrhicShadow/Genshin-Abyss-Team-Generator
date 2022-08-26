@@ -1,9 +1,9 @@
 Name,Vision,Weapon,Rarity,Region
-Aloy,Cryo,Bow,5,Other
-Traveler,Anemo,Sword,5,Other
-Traveler,Dendro,Sword,5,Other
-Traveler,Electro,Sword,5,Other
-Traveler,Geo,Sword,5,Other
+Aloy,Cryo,Bow,5,Outlander
+Traveler,Anemo,Sword,5,Outlander
+Traveler,Dendro,Sword,5,Outlander
+Traveler,Electro,Sword,5,Outlander
+Traveler,Geo,Sword,5,Outlander
 Albedo,Geo,Sword,5,Mondstadt
 Diluc,Pyro,Claymore,5,Mondstadt
 Eula,Cryo,Claymore,5,Mondstadt

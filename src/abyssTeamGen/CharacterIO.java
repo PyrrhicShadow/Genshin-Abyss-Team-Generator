@@ -16,19 +16,19 @@ public class CharacterIO {
      * @param fileName the file path for a formatted CSV
      * @return an ArrayList of characters
      */
-    public ArrayList<Character> readDataFromFile(String fileName) throws IOException {
+    public static ArrayList<Character> readDataFromFile(String fileName) throws IOException {
         FileReader fr = new FileReader(fileName);
         BufferedReader br = new BufferedReader(fr);
 
-        ArrayList characters = new ArrayList<Character>();
+        ArrayList<Character> characters = new ArrayList<>();
         String line = "";
         br.readLine(); // The first line is a header, which needs to be consumed before Temperature objects can be constructed.
         while ((line = br.readLine()) != null) {
             Character chara = new Character(line);
             characters.add(chara);
         }
-        fr.close();
         br.close();
+        fr.close();
 
         return characters;
     }

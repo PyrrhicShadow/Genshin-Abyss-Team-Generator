@@ -5,7 +5,7 @@ public class Character implements Comparable<Character> {
     private Element vision;
     private Weapon weapon;
     private int rarity;
-    private Region region;
+    private Teyvat region;
 
     /**
      *
@@ -13,9 +13,9 @@ public class Character implements Comparable<Character> {
      * @param vision Element of character's vision
      * @param weapon Weapon of character's weapon
      * @param rarity Star rarity of character
-     * @param region Region of character's vision, other for outlanders
+     * @param region Teyvat of character's vision, Outlander for the Traveler and collab characters
      */
-    public Character(String name, Element vision, Weapon weapon, int rarity, Region region) {
+    public Character(String name, Element vision, Weapon weapon, int rarity, Teyvat region) {
         this.name = name;
         this.vision = vision;
         this.weapon = weapon;
@@ -33,7 +33,7 @@ public class Character implements Comparable<Character> {
         vision = Element.valueOf(subStrings[1].toUpperCase());
         weapon = Weapon.valueOf(subStrings[2].toUpperCase());
         rarity = Integer.parseInt(subStrings[3]);
-        region = Region.valueOf(subStrings[4].toUpperCase());
+        region = Teyvat.valueOf(subStrings[4].toUpperCase());
         }
 
     public String getName() {
@@ -52,7 +52,7 @@ public class Character implements Comparable<Character> {
         return rarity;
     }
 
-    public Region getRegion() {
+    public Teyvat getRegion() {
         return region;
     }
 
@@ -61,20 +61,13 @@ public class Character implements Comparable<Character> {
      * @return ex: Eula: 5-star cryo claymore user from Mondstadt
      */
     public String toString() {
-        if (region != Region.OTHER) {
-            return name + ": " + rarity + "-star " + vision.toString() + " " + weapon.toString() + " user from " + region.toString();
-        } else {
-            return name + ": " + rarity + "-star " + vision.toString() + " " + weapon.toString() + " user not from Teyvat";
-        }
+        return name + ": " + rarity + "-star " + vision.toString() + " " + weapon.toString() + " user - " + region.toString();
     }
 
     @Override
     public boolean equals(Object obj){
         Character other = (Character)obj;
-        if(this.compareTo(other) == 0) {
-            return true;
-        }
-        return false;
+        return this.compareTo(other) == 0;
     }
 
     public int compareTo(Character other){

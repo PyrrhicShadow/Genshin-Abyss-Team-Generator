@@ -1,7 +1,7 @@
 package abyssTeamGen;
 
-public enum Region {
-    OTHER, MONDSTADT, LIYUE, INAZUMA, SUMERU, FONTAINE, NATLAN, SNEZHNAYA;
+public enum Teyvat {
+    OUTLANDER, MONDSTADT, LIYUE, INAZUMA, SUMERU, FONTAINE, NATLAN, SNEZHNAYA;
 
     @Override
     public String toString() {
