@@ -11,6 +11,7 @@ import java.util.HashSet;
  */
 public class AbyssTeamApp extends CharacterIO {
 
+    private String data;
     private ArrayList<Character> characters;
     private Character[] abyssTeam1;
     private Character[] abyssTeam2;
@@ -22,6 +23,7 @@ public class AbyssTeamApp extends CharacterIO {
      * @param characters ArrayList of Characters
      */
     public AbyssTeamApp(ArrayList<Character> characters) {
+        this.data = "ArrayList";
         this.characters = characters;
         abyssTeam1 = new Character[ABYSS_TEAM_SIZE];
         abyssTeam2 = new Character[ABYSS_TEAM_SIZE];
@@ -41,6 +43,7 @@ public class AbyssTeamApp extends CharacterIO {
         catch (IOException e) {
             System.out.println(e.getMessage());
         }
+        this.data = "file \"" + data + "\"";
         abyssTeam1 = new Character[ABYSS_TEAM_SIZE];
         abyssTeam2 = new Character[ABYSS_TEAM_SIZE];
         this.randomTeamGenerator();
@@ -269,7 +272,7 @@ public class AbyssTeamApp extends CharacterIO {
         System.out.println("===========================");
         System.out.println("Random Abyss Team Generator");
         System.out.println("===========================");
-        System.out.println(characters.size() + " available characters.");
+        System.out.println(characters.size() + " available characters from " + data + ".");
         System.out.println();
 
         System.out.println("=========Side one:=========");
